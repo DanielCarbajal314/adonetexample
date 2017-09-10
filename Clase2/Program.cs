@@ -15,6 +15,12 @@ namespace Clase2
         static void Main(string[] args)
         {
             ServicioDeProductos servicioProducto = new ServicioDeProductos();
+            NuevoProducto nuevoProducto = new NuevoProducto();
+            nuevoProducto.Nombre = "produto 2";
+            nuevoProducto.CantidadMinima = 10;
+            nuevoProducto.StockActual = 20;
+            servicioProducto.CrearUnNuevoProducto(nuevoProducto);
+
             servicioProducto.ListarTodosLosProductos().ForEach(producto => Console.WriteLine(producto.Nombre));
             Console.ReadKey();
         }

@@ -12,7 +12,7 @@ namespace Clase2.DAL
     public class ServicioDeProductos
     {
         public void CrearUnNuevoProducto(NuevoProducto producto) {
-            SqlConnection conection = this.iniciarConection();
+            SqlConnection conection = this.iniciarConexion();
             SqlCommand comando = new SqlCommand("CrearProducto", conection);
             comando.CommandType = CommandType.StoredProcedure;
             comando.Parameters.Add(new SqlParameter("@Nombre", producto.Nombre));
@@ -20,10 +20,11 @@ namespace Clase2.DAL
             comando.Parameters.Add(new SqlParameter("@StockActual", producto.StockActual));
             conection.Open();
             comando.ExecuteNonQuery();
+            conection.Close();
         }
 
         public List<ProductoGenerico> ListarTodosLosProductos() {
-            SqlConnection conection = this.iniciarConection();
+            SqlConnection conection = this.iniciarConexion();
             SqlCommand comando = new SqlCommand("ListarTodosLosProductos", conection);
             comando.CommandType = CommandType.StoredProcedure;
             conection.Open();
@@ -38,10 +39,11 @@ namespace Clase2.DAL
                 producto.StockActual = (int)lectorDeDatos.GetInt32(3);
                 productos.Add(producto);
             }
+            conection.Close();
             return productos;
         }
 
-        private SqlConnection iniciarConection() {
+        private SqlConnection iniciarConexion() {
             SqlConnection conection = new SqlConnection();
             conection.ConnectionString = ConfigurationManager.ConnectionStrings["Tienda"].ConnectionString;
             return conection;
